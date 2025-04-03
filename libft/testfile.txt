@@ -1,0 +1,8 @@
+total 40
+-rwxr-xr-x 1 lemarino 4224_florence 16176 Apr  1 20:13 a.out
+-rw-r--r-- 1 lemarino 4224_florence   617 Apr  1 20:14 execveing.c
+drwxrwxr-x 2 lemarino 4224_florence  4096 Mar 29 19:28 libft
+-rw-r--r-- 1 lemarino 4224_florence  1136 Mar 29 16:45 Makefile
+-rw-r--r-- 1 lemarino 4224_florence  2135 Apr  1 19:55 pipex.h
+-rw-r--r-- 1 lemarino 4224_florence  1048 Apr  1 12:38 piping.c
+-rw-r--r-- 1 lemarino 4224_florence   457 Apr  1 20:13 testfile.txt

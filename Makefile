@@ -4,7 +4,7 @@ NAME = pipex
 #NAME_BONUS = 
 OBJ_DIR = obj
 
-SRC_MAIN = piping.c
+SRC_MAIN = fuffa.c #starting.c
 
 #SRC_BONUS = 
 
@@ -17,11 +17,11 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 NO_COLOR = \033[0m
 RED = \033[31m
-GREEN = \033[32m
+GREEN = \033[32;5m
 YELLOW = \033[33m
 BLUE = \033[34m
 MAGENTA = \033[35m
-CYAN = \033[36m
+CYAN = \033[36;5m
 
 all: $(LIBFT) $(NAME)
 
