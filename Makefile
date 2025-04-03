@@ -4,7 +4,7 @@ NAME = pipex
 #NAME_BONUS = 
 OBJ_DIR = obj
 
-SRC_MAIN = fuffa.c #starting.c
+SRC_MAIN = pipex.c utils.c #starting.c
 
 #SRC_BONUS = 
 
