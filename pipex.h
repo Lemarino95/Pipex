@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lemarino <lemarino+student.42.fr>          +#+  +:+       +#+        */
+/*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:33:20 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/03 21:06:05 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/04 18:47:23 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@
 # define NO_BG "\e[49m"
 
 /*~~~~~~~~~~~~~~~MORE~~~~~~~~~~~~~~~*/
-# define BOLD "\e[1m"// "\e[1;4m" Bold and Underlined
+# define BOLD "\e[1m"
 # define NO_BOLD "\e[21m"
 
 # define UNDERLINE "\e[4m"
 # define NO_UNDERLINE "\e[24m"
 
-# define BLINK "\e[5m"//Doesn't work on vscode terminal
+# define BLINK "\e[5m"
 # define NO_BLINK "\e[25m"
 
 # define HIDE "\e[8m"
@@ -57,8 +57,8 @@
 
 // utils.c
 char	*find_pathname(char **envp, char *cmd);
+void	execute_cmd(char *cmd, char **envp, char *numcmd);
 
 #endif
 
-
-// env | grep PATH su terminale per vedere i path
+// sleep()
