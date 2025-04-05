@@ -6,7 +6,7 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:01:50 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/05 17:02:18 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/05 19:21:38 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ void	cmd1_process(char *av[], char **envp, int *pipefd)
 	close(pipefd[0]);
 	infile = open(av[1], O_RDONLY);
 	if (-1 == infile)
-		return(close(pipefd[1]), perror(RED"Invalid input file"), exit(2));
+	{
+		perror(RED"zsh: ");
+		return(close(pipefd[1]), exit(2));
+	}
 	dup2(infile, STDIN_FILENO);
 	close(infile);
 	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
 	execute_cmd(av[2], envp, "First");
+	exit(0);
 }
 
 void	cmd2_process(char *av[], char **envp, int *pipefd)
@@ -34,12 +38,16 @@ void	cmd2_process(char *av[], char **envp, int *pipefd)
 	close(pipefd[1]);
 	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (-1 == outfile)
-		return(close(pipefd[0]), perror(RED"Invalid output file"), exit(3));
+	{
+		perror(RED"zsh: ");
+		return(close(pipefd[0]),  exit(3));
+	}
 	dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
 	dup2(outfile, STDOUT_FILENO);
 	close(outfile);
 	execute_cmd(av[3], envp, "Second");
+	exit(127);
 }
 
 /* void	firstborn(char *av[], char **envp)

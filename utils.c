@@ -6,7 +6,7 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:01:50 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/04 18:34:45 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/05 19:44:12 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ char	*find_pathname(char **envp, char *cmd)
 		i++;
 	}
 	free_dpc(paths);
-	perror(RED"Path not found or invalid");
-	return (ft_printf("Command \"%s\" not executed.\n", cmd), NULL);
+	return (perror(RED"zsh: command not found"), NULL);//ft_printf("Invalid path for %s command.\n", cmd)
 }
 
-void	execute_cmd(char *cmd, char **envp, char *numcmd)
+void	*execute_cmd(char *cmd, char **envp, char *numcmd)
 {
 	char	*PATH;
 	char	**split_cmd;
@@ -50,20 +49,22 @@ void	execute_cmd(char *cmd, char **envp, char *numcmd)
 	PATH = NULL;
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, F_OK | X_OK | R_OK) != 0)
-			return (perror(RED"Invalid path"), exit(0));
 		split_cmd = ft_split(cmd, ' ');
-		execve(cmd, split_cmd, envp);
-		ft_printf(RED"%s command not executed\n", numcmd);
-		return (free_dpc(split_cmd), exit(0));
+		if (!split_cmd)
+			return (NULL);
+		if (access(split_cmd[0], F_OK | X_OK | R_OK) != 0)
+			return (perror(RED"Invalid path"), free_dpc(split_cmd), NULL);//zsh: permission denied: cmd ??
+		execve(split_cmd[0], split_cmd, envp);
+		ft_printf("%s command not executed\n", numcmd);
+		return (free_dpc(split_cmd), NULL);
 	}
 	split_cmd = ft_split(cmd, ' ');
 	if (!split_cmd)
-		return;
+		return(NULL);
 	PATH = find_pathname(envp, split_cmd[0]);
 	if (!PATH)
-		return (free_dpc(split_cmd), exit(0));
+		return (free_dpc(split_cmd), NULL);
 	execve(PATH, split_cmd, envp);
-	ft_printf(RED"%s command not executed\n", numcmd);
-	return (free(PATH), free_dpc(split_cmd), exit(0));
+	ft_printf("%s command not executed\n", numcmd);
+	return (free(PATH), free_dpc(split_cmd), NULL);
 }
