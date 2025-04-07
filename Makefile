@@ -1,15 +1,15 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I libft -g
 NAME = pipex
-#NAME_BONUS = 
+NAME_BONUS = pipex_bonus
 OBJ_DIR = obj
 
-SRC_MAIN = pipex.c utils.c #starting.c
+SRC_MAIN = pipex.c cmd_processes.c utils.c
 
-#SRC_BONUS = 
+SRC_BONUS = pipex_bonus.c cmd_processes.c utils.c utils_bonus.c
 
 OBJECTS_MAIN = $(SRC_MAIN:%.c=$(OBJ_DIR)/%.o)
-#OBJECTS_BONUS = $(SRC_BONUS:%.c=$(OBJ_DIR)/%.o)
+OBJECTS_BONUS = $(SRC_BONUS:%.c=$(OBJ_DIR)/%.o)
 OBJECTS = $(OBJECTS_MAIN)
 
 LIBFT_DIR = libft
@@ -35,11 +35,11 @@ $(NAME): $(LIBFT) $(SRC_MAIN)
 	$(CC) $(CFLAGS) $(SRC_MAIN) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN)Object files created!$(NO_COLOR)"
 
-#bonus: $(LIBFT) $(NAME_BONUS)
+bonus: $(LIBFT) $(NAME_BONUS)
 
-#$(NAME_BONUS): $(LIBFT) $(SRC_BONUS)
-#	$(CC) $(CFLAGS) $(SRC_BONUS) $(LIBFT) -o $(NAME_BONUS)
-#	@echo "$(CYAN)Checker compiled!$(NO_COLOR)"
+$(NAME_BONUS): $(LIBFT) $(SRC_BONUS)
+	$(CC) $(CFLAGS) $(SRC_BONUS) $(LIBFT) -o pipex_bonus
+	@echo "$(CYAN)bonus compiled!$(NO_COLOR)"
 
 clean:
 	@echo "$(YELLOW)Cleaning...$(NO_COLOR)"
@@ -54,4 +54,4 @@ re: fclean all
 
 libft: $(LIBFT)
 
-.PHONY: all clean fclean re libft #bonus
+.PHONY: all clean fclean re libft bonus

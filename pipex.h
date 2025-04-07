@@ -6,19 +6,19 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:33:20 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/07 11:31:17 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/07 19:37:12 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 # include <sys/wait.h>
 # include "libft/libft.h"
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~MACROS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-/*~~~~~~~~~~~~~~~COLORS~~~~~~~~~~~~~~~*/
+//COLORS
 # define NO_ALL "\033[0m"
 
 # define NO_COLOR "\e[39m"
@@ -31,12 +31,12 @@
 # define MAGENTA "\033[95m"
 # define BRCYAN "\033[96m"
 
-/*~~~~~~~~~~~~BACKGROUNDS~~~~~~~~~~~~~*/
+//BACKGROUNDS
 # define BGMAGENTA "\033[45m"
 # define BLACK_ON_WHITE "\e[107;30m"
 # define NO_BG "\e[49m"
 
-/*~~~~~~~~~~~~~~~MORE~~~~~~~~~~~~~~~*/
+//MORE
 # define BOLD "\e[1m"
 # define NO_BOLD "\e[21m"
 
@@ -55,12 +55,17 @@
 
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-// utils.c
+/*>>>>>>>>>>>>>>>>>>>>>> utils.c <<<<<<<<<<<<<<<<<<<<<*/
+// Prints two strings on the Standard Error fd
 void	print_err(char *s1, char *err_type);
-char	*find_pathname(char **envp, char *cmd);
+
+// Looks for the path of the command "cmd" in the Environment (envp)
+char	*find_pathname(char *cmd, char **envp);
+
 void	*execute_cmd(char *cmd, char **envp);
 
-#endif
+//>>>>>>>>>>>>>>>>>>> cmd_processes.c <<<<<<<<<<<<<<<<<<<<<*/
+void	first_cmd_process(char *av[], char **envp, int *pipefd);
+void	last_cmd_process(int ac, char *av[], char **envp, int *pipefd);
 
-// fd aperto
-//sleep
+#endif

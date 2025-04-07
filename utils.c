@@ -6,7 +6,7 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:01:50 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/07 11:36:15 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:51:01 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_err(char *s1, char *err_type)
 }
 
 // Looks for the path of the command "cmd" in the Environment (envp)
-char	*find_pathname(char **envp, char *cmd)
+char	*find_pathname(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*pathname;
@@ -46,38 +46,37 @@ char	*find_pathname(char **envp, char *cmd)
 		i++;
 	}
 	free_dpc(paths);
-	return(print_err(cmd, ": command not found.\n"), NULL);
-	// return (write(2, cmd, ft_strlen(cmd)), \
-	// 					write(2, ": command not found\n", 21), NULL);//ft_printf("Invalid path for %s command.\n", cmd) ~ perror("zsh: command not found")
+	return (print_err(cmd, ": command not found.\n"), NULL);
 }
 
+// Executes a command with the given absolute or relative path
 void	*execute_absrel_path(char *cmd, char **envp)
 {
 	char	**split_cmd;
 
 	split_cmd = ft_split(cmd, ' ');
-		if (!split_cmd)
-			return (NULL);
-		if (access(split_cmd[0], F_OK | X_OK | R_OK) != 0)
-		{
-			print_err(cmd, ": permission denied.\n");
-			free_dpc(split_cmd);
-			return (NULL);
-		}
-		execve(split_cmd[0], split_cmd, envp);
-		print_err(cmd, ": command not executed.\n");
-		return (free_dpc(split_cmd), NULL);
+	if (!split_cmd)
+		return (NULL);
+	if (access(split_cmd[0], F_OK | X_OK | R_OK) != 0)
+	{
+		print_err(cmd, ": permission denied.\n");
+		free_dpc(split_cmd);
+		return (NULL);
+	}
+	execve(split_cmd[0], split_cmd, envp);
+	print_err(cmd, ": command not executed.\n");
+	return (free_dpc(split_cmd), NULL);
 }
 
-// If a '/' is present in the cmd string, an absolute/relative path to the
-//  command was given as input and it won't be searched in the Environment
+// If a '/' is present in the cmd string, an absolute/relative path was given
+//  to the command from input and it won't be searched in the Environment
 void	*execute_cmd(char *cmd, char **envp)
 {
-	char	*PATH;
+	char	*cmd_path;
 	char	**split_cmd;
 
 	split_cmd = NULL;
-	PATH = NULL;
+	cmd_path = NULL;
 	if (ft_strchr(cmd, '/'))
 	{
 		execute_absrel_path(cmd, envp);
@@ -85,11 +84,11 @@ void	*execute_cmd(char *cmd, char **envp)
 	}
 	split_cmd = ft_split(cmd, ' ');
 	if (!split_cmd)
-		return(NULL);
-	PATH = find_pathname(envp, split_cmd[0]);
-	if (!PATH)
+		return (NULL);
+	cmd_path = find_pathname(split_cmd[0], envp);
+	if (!cmd_path)
 		return (free_dpc(split_cmd), NULL);
-	execve(PATH, split_cmd, envp);
+	execve(cmd_path, split_cmd, envp);
 	print_err(cmd, ": command not executed.\n");
-	return (free(PATH), free_dpc(split_cmd), NULL);
+	return (free(cmd_path), free_dpc(split_cmd), NULL);
 }
