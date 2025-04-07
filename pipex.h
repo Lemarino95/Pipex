@@ -6,7 +6,7 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:33:20 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/04 18:47:23 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:31:17 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@
 /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 // utils.c
+void	print_err(char *s1, char *err_type);
 char	*find_pathname(char **envp, char *cmd);
-void	execute_cmd(char *cmd, char **envp, char *numcmd);
+void	*execute_cmd(char *cmd, char **envp);
 
 #endif
 
-// sleep()
+// fd aperto
+//sleep
