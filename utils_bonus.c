@@ -6,7 +6,7 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:14:29 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/07 22:51:32 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:47:42 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	close_fds(int **fd_mrx, int i)
 	j = 0;
 	while (j <= i)
 	{
-		printf(BRCYAN"%d\n"NO_ALL, j);//###########
 		close(fd_mrx[j][0]);
 		close(fd_mrx[j][1]);
 		j++;
