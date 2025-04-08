@@ -6,7 +6,7 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:52:59 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/08 14:57:33 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:11:30 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	first_cmd_process(char *av[], char **envp, int *pipefd)
 		return (close(pipefd[1]), 0);
 	close(pipefd[1]);
 	execute_cmd(av[2], envp);
+	return (1);
 	// exit(0);
 }
 
@@ -37,7 +38,7 @@ int	last_cmd_process(int ac, char *av[], char **envp, int *pipefd)
 {
 	int	outfile;
 
-	// close(pipefd[1]);
+	close(pipefd[1]);
 	outfile = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (-1 == outfile)
 	{
@@ -51,5 +52,6 @@ int	last_cmd_process(int ac, char *av[], char **envp, int *pipefd)
 		return (close(outfile), 0);
 	close(outfile);
 	execute_cmd(av[ac - 2], envp);
+	return (1);
 	// exit(127);
 }
