@@ -6,7 +6,8 @@ OBJ_DIR = obj
 
 SRC_MAIN = pipex.c cmd_processes.c utils.c
 
-SRC_BONUS = pipex_bonus.c cmd_processes.c utils.c utils_bonus.c
+SRC_BONUS = pipex_bonus.c cmd_processes.c middle_cmds_bonus.c\
+			utils.c utils_bonus.c
 
 OBJECTS_MAIN = $(SRC_MAIN:%.c=$(OBJ_DIR)/%.o)
 OBJECTS_BONUS = $(SRC_BONUS:%.c=$(OBJ_DIR)/%.o)

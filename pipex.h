@@ -6,7 +6,7 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:33:20 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/08 14:59:22 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:23:10 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*find_pathname(char *cmd, char **envp);
 void	*execute_cmd(char *cmd, char **envp);
 
 //>>>>>>>>>>>>>>>>>>> cmd_processes.c <<<<<<<<<<<<<<<<<<<<<*/
-int		first_cmd_process(char *av[], char **envp, int *pipefd);
+int		first_cmd_process(char *infile, char *cmd, char **envp, int *pipefd);
 int		last_cmd_process(int ac, char *av[], char **envp, int *pipefd);
 
 #endif

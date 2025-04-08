@@ -6,88 +6,77 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:48:00 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/08 15:25:12 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:23:57 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-int	middle_cmd_process(char *cmd, char **envp, int *pipefd1, int *pipefd2)
+void	initialize_commands(int ac, char **av, char **envp, int *pipefd)
 {
-	// close(pipefd1[1]);
-	close(pipefd2[0]);
-	if (dup2(pipefd1[0], STDIN_FILENO) < 0)
-		return (close(pipefd1[0]), close(pipefd2[1]), 0);
-	close(pipefd1[0]);
-	if (dup2(pipefd2[1], STDOUT_FILENO) < 0)
-		return (close(pipefd2[1]), 0);
-	close(pipefd2[1]);
-	execute_cmd(cmd, envp);
-	return (1);
-	// exit(0);
-}
+	int		id1;
+	int		id2;
 
-// Creates a child process and a pipe for each command to be executed
-//  between the first and last.
-int	middle_child_generator(int ac, char **av, char **envp, int **fd_mrx)
-{
-	int	id2;
-	int	i;
-
-	i = 0;
-	while (i < (ac - 5))
-	{
-		i++;
-		if (-1 == pipe(fd_mrx[i]))
-			return (print_err("Failed to create pipe.", "\n"), i);
-		id2 = fork();
-		if (id2 < 0)
-			return (print_err("Fork failed for id2.", "\n"), \
-							close(fd_mrx[i][0]), close(fd_mrx[i][1]), i - 1);
-		else if (0 == id2)
-			middle_cmd_process(av[i + 2], envp, fd_mrx[i - 1], fd_mrx[i]);
-		close(fd_mrx[i][1]);
-	}
-	return (i);
-}
-
-// Creates a child process for each command to be executed.
-static void	nursery(int ac, char *av[], char **envp, int **fd_mrx)
-{
-	int	i;
-	int	id1;
-	int	id3;
-
-	i = 0;
-	if (-1 == pipe(fd_mrx[0]))
-		return (print_err("Failed to create pipe.", "\n"));
 	id1 = fork();
 	if (id1 < 0)
-		return (print_err("Fork failed for id1.", "\n"));
-	if (0 == id1)
-		first_cmd_process(av, envp, fd_mrx[0]);
-	close(fd_mrx[i][1]);
-	i = middle_child_generator(ac, av, envp, fd_mrx);
-	id3 = fork();
-	if (id3 < 0)
-		return (print_err("Fork failed for id3.", "\n"));
-	else if (0 == id3)
-		last_cmd_process(ac, av, envp, fd_mrx[i]);
-	// close_fds(fd_mrx, i);
+		return(close(pipefd[1]), close(pipefd[0]), exit(0));
+	else if (0 == id1)
+		first_cmd_process("here_doc.txt", av[3], envp, pipefd);
+	id2 = fork();
+	if (id2 < 0)
+		return(close(pipefd[1]), close(pipefd[0]), exit(0));
+	if (0 == id2)
+		last_cmd_process(ac, av, envp, pipefd);
+	close(pipefd[0]);
+	close(pipefd[1]);
 }
 
+// Writes the input text in a HereDoc file and deletes it after
+//  the commands have been run
+void	here_docking(int ac, char **av, char **envp)
+{
+	char	*limiter;
+	char	*str;
+	int		here_doc_fd;
+	int		pipefd[2];
+
+	limiter = ft_strjoin(ft_strdup(av[2]), "\n");
+	here_doc_fd = open("here_doc.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (dup2(here_doc_fd, STDOUT_FILENO) < 0)
+		return (free(limiter), exit(0));
+	close(here_doc_fd);
+	while(ft_strcmp(str = get_next_line(0), limiter) != 0)
+	{
+		ft_printf("%s", str);
+		free(str);
+	}
+	free(str);
+	free(limiter);
+	if (pipe(pipefd) < 0)
+		exit(0);
+	initialize_commands(ac, av, envp, pipefd);
+	while (waitpid(-1, NULL, 0) > 0)
+		;
+	unlink("here_doc.txt");
+	exit(0);
+}
+
+//  ./pipex here_doc LIMITER cmd cmd1 file
+// ./pipex inputfile.txt cmd1 cmd2 cmd3 outputfile.txt
 int	main(int ac, char *av[], char **envp)
 {
 	int	**fd_mrx;
 
 	if (ac < 5)
 		return (print_err("Invalid number of arguments.", "\n"), 2);
+	if (0 == ft_strcmp(av[1], "here_doc"))
+		here_docking(ac, av, envp);
 	fd_mrx = fd_matrix_creator(ac);
 	if (!fd_mrx)
 		return (print_err("Failed to create pipe matrix.", "\n"), 2);
 	nursery(ac, av, envp, fd_mrx);
-	close_fds(fd_mrx, (ac - 5));
-	liberate_matrix(fd_mrx, ac - 4);
+	// close_fds(fd_mrx, (ac - 5));
+	liberate_fdmatrix(fd_mrx, ac - 5);
 	while (waitpid(-1, NULL, 0) > 0)
 		;
 }
