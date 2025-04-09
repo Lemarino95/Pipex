@@ -6,12 +6,13 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 21:01:50 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/08 19:23:29 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:25:42 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+// ./pipex inputfile.txt cmd1 cmd2 outputfile.txt
 int	main(int ac, char *av[], char **envp)
 {
 	int	pipefd[2];

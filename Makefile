@@ -39,7 +39,7 @@ $(NAME): $(LIBFT) $(SRC_MAIN)
 bonus: $(LIBFT) $(NAME_BONUS)
 
 $(NAME_BONUS): $(LIBFT) $(SRC_BONUS)
-	$(CC) $(CFLAGS) $(SRC_BONUS) $(LIBFT) -o pipex_bonus
+	$(CC) $(CFLAGS) $(SRC_BONUS) $(LIBFT) -o pipex
 	@echo "$(CYAN)bonus compiled!$(NO_COLOR)"
 
 clean:

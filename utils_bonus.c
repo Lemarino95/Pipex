@@ -6,7 +6,7 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:14:29 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/08 20:18:39 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:26:04 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Closes all file descriptors and liberates the allocated memory
 void	liberate_fdmatrix(int **fd_mrx, int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (j <= i)
@@ -27,19 +27,6 @@ void	liberate_fdmatrix(int **fd_mrx, int i)
 	}
 	free(fd_mrx);
 }
-
-/* void	close_fds(int **fd_mrx, int i)
-{
-	int	j;
-
-	j = 0;
-	while (j <= i)
-	{
-		close(fd_mrx[j][0]);
-		close(fd_mrx[j][1]);
-		j++;
-	}
-} */
 
 int	**fd_matrix_creator(int ac)
 {
@@ -54,10 +41,10 @@ int	**fd_matrix_creator(int ac)
 	{
 		fd_matrix[i] = ft_calloc(2, sizeof(int));
 		if (!fd_matrix[i])
-			{
-				liberate_fdmatrix(fd_matrix, i);
-				exit(0);
-			}
+		{
+			liberate_fdmatrix(fd_matrix, i);
+			exit(0);
+		}
 		i++;
 	}
 	return (fd_matrix);

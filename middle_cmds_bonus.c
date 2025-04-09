@@ -6,7 +6,7 @@
 /*   By: lemarino <lemarino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:36:36 by lemarino          #+#    #+#             */
-/*   Updated: 2025/04/08 19:37:06 by lemarino         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:31:16 by lemarino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	middle_cmd_process(char *cmd, char **envp, int *pipefd1, int *pipefd2)
 {
-	// close(pipefd1[1]);
 	close(pipefd2[0]);
 	if (dup2(pipefd1[0], STDIN_FILENO) < 0)
 		return (close(pipefd1[0]), close(pipefd2[1]), 0);
@@ -24,7 +23,6 @@ int	middle_cmd_process(char *cmd, char **envp, int *pipefd1, int *pipefd2)
 	close(pipefd2[1]);
 	execute_cmd(cmd, envp);
 	return (1);
-	// exit(0);
 }
 
 // Creates a child process and a pipe for each command to be executed
@@ -73,5 +71,4 @@ void	nursery(int ac, char *av[], char **envp, int **fd_mrx)
 		return (print_err("Fork failed for id3.", "\n"));
 	else if (0 == id3)
 		last_cmd_process(ac, av, envp, fd_mrx[i]);
-	// close_fds(fd_mrx, i);
 }
