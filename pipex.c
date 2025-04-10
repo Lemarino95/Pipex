@@ -12,7 +12,6 @@
 
 #include "pipex.h"
 
-// ./pipex inputfile.txt cmd1 cmd2 outputfile.txt
 int	main(int ac, char *av[], char **envp)
 {
 	int	pipefd[2];
