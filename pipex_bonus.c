@@ -63,8 +63,6 @@ void	here_docking(int ac, char **av, char **envp)
 	exit(0);
 }
 
-//  ./pipex here_doc LIMITER cmd cmd1 file
-// ./pipex inputfile.txt cmd1 cmd2 cmd3 ... cmdn outputfile.txt
 int	main(int ac, char *av[], char **envp)
 {
 	int	**fd_mrx;
