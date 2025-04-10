@@ -6,9 +6,9 @@ It must be executed as follows:
   
 and behave like the shell commmand line:
    < file1 cmd1 | cmd2 > file2
-|
-|
-|
+ |                  |
+ |                  |
+ |                  |
 BONUS PART
 Compile with "make bonus" to handle multiple pipes:
    ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file2
