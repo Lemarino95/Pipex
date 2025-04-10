@@ -1,4 +1,4 @@
-#A program that emulates the unix pipe function ("|").#
+#A program that emulates the unix pipe function ("|").
 
 It must be executed as follows:
 ~~~
@@ -10,6 +10,7 @@ It must be executed as follows:
 ~~~
    
 BONUS PART~~~
+
 Compile with "make bonus" to handle multiple pipes:
 ~~~
    ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file2
