@@ -18,5 +18,5 @@ Compile with "make bonus" to handle multiple pipes:
 ~~~
 And HereDocs:
  ~~~
- ./pipex here_doc LIMITER cmd cmd1 file  =>  cmd << LIMITER | cmd1 >> file
+ ./pipex here_doc LIMITER cmd cmd1 file  ==  cmd << LIMITER | cmd1 >> file
 ~~~
