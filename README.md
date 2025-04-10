@@ -1,16 +1,16 @@
-#
-A program that emulates the unix pipe function ("|").
+# A program that emulates the unix pipe function ("|").
 
-It must be executed as follows:
+### It must be executed as follows:
 ~~~
   ./pipex file1 cmd1 cmd2 file2
 ~~~
 
-~~~and behave like the shell commmand line:
+### and behave like the shell commmand line:
+~~~
    < file1 cmd1 | cmd2 > file2
 ~~~
    
-BONUS PART~~~
+## BONUS PART~~~
 
 Compile with "make bonus" to handle multiple pipes:
 ~~~
