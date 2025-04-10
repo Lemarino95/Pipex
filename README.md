@@ -21,7 +21,7 @@ And HereDocs:
  ./pipex here_doc LIMITER cmd cmd1 file  ==  cmd << LIMITER | cmd1 >> file
 ~~~
 
-### Leak check and suppression
+### Leaks check and suppression
 
 Check for memory leaks and the state of processes and File Descriptors with:
 ~~~
