@@ -20,3 +20,11 @@ And HereDocs:
  ~~~
  ./pipex here_doc LIMITER cmd cmd1 file  ==  cmd << LIMITER | cmd1 >> file
 ~~~
+
+### Leak suppression
+
+Suppress memory leaks from system functions with:
+
+~~~
+vlagrind valchild --suppressions=supp.supp
+~~~
