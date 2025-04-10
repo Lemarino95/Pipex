@@ -21,10 +21,15 @@ And HereDocs:
  ./pipex here_doc LIMITER cmd cmd1 file  ==  cmd << LIMITER | cmd1 >> file
 ~~~
 
-### Leak suppression
+### Leak check and suppression
 
-Suppress memory leaks from system functions with:
+Check for memory leaks and the state of processes and File Descriptors with:
+~~~
+valgrind --track-origins=yes --show-leak-kinds=all --leak-check=full --track-fds=yes --trace-children=yes
+~~~
+
+Suppress memory leaks from system functions by adding:
 
 ~~~
-vlagrind valchild --suppressions=supp.supp
+ --suppressions=supp.supp
 ~~~
