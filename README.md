@@ -1,4 +1,5 @@
-#A program that emulates the unix pipe function ("|").
+#
+A program that emulates the unix pipe function ("|").
 
 It must be executed as follows:
 ~~~
