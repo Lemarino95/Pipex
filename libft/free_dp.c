@@ -26,18 +26,3 @@ void	**free_dpc(char **double_pointer_char)
 	free(double_pointer_char);
 	return (NULL);
 }
-
-// Frees an int matrix
-void	**free_dpi(int **double_pointer_int)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < (sizeof(double_pointer_int) / sizeof(double_pointer_int[0])))
-	{
-		free(double_pointer_int[i]);
-		i++;
-	}
-	free(double_pointer_int);
-	return (NULL);
-}
